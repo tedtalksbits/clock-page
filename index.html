@@ -29,11 +29,11 @@
         seconds = updateTime(seconds);
         minutes = updateTime(minutes);
         hours = updateTime(hours);
-
+    
         //logic
         if(hours < 12){
             body.className = 'morning';
-            clockShow.innerHTML = hours + ':' + minutes + ':' + '<span id="seconds">'+seconds+'</span>' + '<span id="am-pm">AM</span>';
+            clockShow.innerHTML = hours + ':' + minutes + ':' + seconds + '<span>AM</span>';
             msg.innerHTML = `Good Morning!`
             
 
@@ -41,26 +41,28 @@
         else if(hours == 12){
             if(minutes > 1){
                 body.className = 'mid-day';
-                clockShow.innerHTML = hours + ':' + minutes + ':' + '<span id="seconds">'+seconds+'</span>' + '<span id="am-pm">PM</span>';
+                clockShow.innerHTML = hours + ':' + minutes + ':' + seconds + '<span>PM</span>';
                 msg.innerHTML = `Good Day!`
             }
         }
         else if(hours > 12 && hours < 15){
             body.className = 'mid-day';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + '<span id="seconds">'+seconds+'</span>' + '<span id="am-pm">PM</span>';
+            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
             msg.innerHTML = `Good Day!`
 
         }
         else if(hours < 20){
             body.className = 'evening';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + '<span id="seconds">'+seconds+'</span>' + '<span id="am-pm">PM</span>';
+            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
             msg.innerHTML = `Good Evening!`
         }
         else {
             body.className = 'night';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + '<span id="seconds">'+seconds+'</span>' + '<span id="am-pm">PM</span>';
+            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
             msg.innerHTML = `Good Night!`
         }
+
+        
 
         
     }
