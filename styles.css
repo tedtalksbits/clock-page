@@ -4,45 +4,46 @@
     padding: 0;
     font-family: sans-serif;
 }
+body{
+    display: grid;
+    place-items: center;
+}
 
 .clock-wrap {
-    height: 900px;
-    position: relative; 
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    gap: 2rem;
 }
 
 .clock {
-    font-size: 100px;
+    font-size: clamp(1rem, 8vw, 6rem);
     letter-spacing: .5rem;
     color: rgba(255, 255, 255, 0.836);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    margin-right: -50%;
     background: rgba(255, 255, 255, 0.171);
     padding: 10px;
     border-radius: 25px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
 }
 
 span{
     color: rgba(0, 0, 0, 0.568);
-    font-size: 50px;
     margin: 15px;
+    font-size: clamp(.9rem, 8vw, 2rem);
 }
 
-
+.content{
+    width: 90%;
+}
 .msg{
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%); 
-    padding: 40px;
-    width: 500px;
+    font-size: clamp(1rem, 8vw, 6rem);
     color: white;
     text-align: center;
-    font-size: 50px;
+    margin: 2rem;
 }
 .evening{
     background:linear-gradient(90deg, #fe8c00 0%,#f83600 100% );

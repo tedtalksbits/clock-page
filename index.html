@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700;800;900&display=swap"
+        rel="stylesheet">
 
     <title>Smart Clock</title>
     <!--changed the title-->
 </head>
+
 <body class="body">
     <div class="clock-wrap">
-        <div class="msg"></div>
-        <div class="clock"></div>
+        <div class="content">
+
+            <div class="msg"></div>
+            <div class="clock"></div>
+        </div>
     </div>
 </body>
 <script>
@@ -20,8 +26,8 @@
     let clockShow = document.querySelector('.clock');
     let msg = document.querySelector('.msg');
     let body = document.querySelector('.body');
-  
-    function getDate(){
+
+    function getDate() {
 
         const now = new Date();
         let seconds = now.getSeconds();
@@ -30,29 +36,29 @@
         seconds = updateTime(seconds);
         minutes = updateTime(minutes);
         hours = updateTime(hours);
-    
+
         //logic
-        if(hours < 12){
+        if (hours < 12) {
             body.className = 'morning';
             clockShow.innerHTML = hours + ':' + minutes + ':' + seconds + '<span>AM</span>';
             msg.innerHTML = `Good Morning!`
-            
+
 
         }
-        else if(hours == 12){
-            if(minutes > 1){
+        else if (hours == 12) {
+            if (minutes > 1) {
                 body.className = 'mid-day';
                 clockShow.innerHTML = hours + ':' + minutes + ':' + seconds + '<span>PM</span>';
                 msg.innerHTML = `Good Day!`
             }
         }
-        else if(hours > 12 && hours < 15){
+        else if (hours > 12 && hours < 15) {
             body.className = 'mid-day';
             clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
             msg.innerHTML = `Good Day!`
 
         }
-        else if(hours < 20){
+        else if (hours < 20) {
             body.className = 'evening';
             clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
             msg.innerHTML = `Good Evening!`
@@ -63,9 +69,9 @@
             msg.innerHTML = `Good Night!`
         }
 
-        
 
-        
+
+
     }
     // add 0 -- eg. 1 = 01
     function updateTime(k) {
@@ -78,8 +84,9 @@
     }
 
 
-  
-    setInterval(getDate,1000)
-    
+
+    setInterval(getDate, 1000)
+
 </script>
+
 </html>
