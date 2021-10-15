@@ -15,17 +15,82 @@
 <body class="body">
     <div class="clock-wrap">
         <div class="content">
-
             <div class="msg"></div>
-            <div class="clock"></div>
+            <h1 class="clock"></h1>
+            <div class="weather">
+                <div class="weather__top">
+                    <h4>Today</h4>
+
+                    <p class="date"></p>
+                </div>
+                <div class="weather__center">
+
+                    <h1 class="temp"></h1>
+                    <div class="icon">
+                        <img id="weather-icon" src="" alt="" srcset="">
+                    </div>
+                </div>
+                <div class="weather__bottom">
+                    <p class="day"></p>
+                </div>
+            </div>
         </div>
     </div>
 </body>
 <script>
+    const locationKey = '2146495';
+    const apiKey = 'ye2oA4WGUFjcphMAPN7NoW3yeKFAEiC6';
+    const URL = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}`;
+    const icons = {
+        sunny: './icons/6.png',
+        rainy: './icons/rainy.png',
+        cold: './icons/cold.png',
+        night: './icons/night.png'
+
+    }
+    const fetchWeather = async () => {
+        const res = await fetch(URL, {
+            method: 'GET',
+
+        })
+
+        const result = await res.json();
+        console.log(result.DailyForecasts);
+
+        let dateText = document.querySelector('.date');
+        let tempText = document.querySelector('.temp');
+        let bottomText = document.querySelector('.day');
+
+        let weatherDegree = result.DailyForecasts[0].Temperature.Minimum.Value;
+        let weatherCondition = result.DailyForecasts[0].Day.IconPhrase;
+        let hasPercipitation = result.DailyForecasts[0].Day.HasPercipitation;
+
+        bottomText.innerHTML = weatherCondition;
+        dateText.innerHTML = result.DailyForecasts[0].Date.slice(0, 10);
+
+        if (weatherDegree >= 60 && !hasPercipitation) {
+
+            tempText.innerHTML = weatherDegree + "<p>°F<p/>";
+            document.getElementById("weather-icon").src = icons.sunny;
+        }
+        else if (weatherDegree >= 60 && hasPercipitation) {
+            document.getElementById("weather-icon").src = icons.rainy;
+        }
+        else if (hasPercipitation) {
+            document.getElementById("weather-icon").src = icons.cold;
+        }
+    }
+
+    fetchWeather();
+
+    // console.log(result);
 
     let clockShow = document.querySelector('.clock');
     let msg = document.querySelector('.msg');
     let body = document.querySelector('.body');
+    let weatherDiv = document.querySelector('.weather');
+    let username = 'Tedane';
+
 
     function getDate() {
 
@@ -40,33 +105,34 @@
         //logic
         if (hours < 12) {
             body.className = 'morning';
-            clockShow.innerHTML = hours + ':' + minutes + ':' + seconds + '<span>AM</span>';
-            msg.innerHTML = `Good Morning!`
+            clockShow.innerHTML = hours + ':' + minutes + '<span>AM</span>';
+            msg.innerHTML = `Good Morning, ${username}`
 
 
         }
         else if (hours == 12) {
             if (minutes > 1) {
                 body.className = 'mid-day';
-                clockShow.innerHTML = hours + ':' + minutes + ':' + seconds + '<span>PM</span>';
-                msg.innerHTML = `Good Day!`
+                clockShow.innerHTML = hours + ':' + minutes + '<span>PM</span>';
+                msg.innerHTML = `Good Day! ${username}`
             }
         }
         else if (hours > 12 && hours < 15) {
             body.className = 'mid-day';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
-            msg.innerHTML = `Good Day!`
+            clockShow.innerHTML = hours - 12 + ':' + minutes + '<span>PM</span>';
+            msg.innerHTML = `Good Day! ${username}`
 
         }
         else if (hours < 20) {
             body.className = 'evening';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
-            msg.innerHTML = `Good Evening!`
+            clockShow.innerHTML = hours - 12 + ':' + minutes + '<span>PM</span>';
+            msg.innerHTML = `Good Evening! ${username}`
         }
         else {
             body.className = 'night';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + ':' + seconds + '<span>PM</span>';
+            clockShow.innerHTML = hours - 12 + ':' + minutes + '<span>PM</span>';
             msg.innerHTML = `Good Night!`
+            document.getElementById("weather-icon").src = icons.night;
         }
 
 
