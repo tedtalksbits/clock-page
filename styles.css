@@ -66,7 +66,7 @@ span{
     background:linear-gradient(90deg, #fe8c00 0%,#f83600 100% );
 }
 .night{
-    background:linear-gradient(90deg, #0b0e1f 0%,#f00f69 100% );
+    background: linear-gradient(180deg, rgba(7,3,77,1) 0%, rgba(8,8,40,1) 15%, rgba(5,28,43,1) 85%, rgba(0,61,73,1) 100%);
 }
 .morning{
     background:linear-gradient(90deg, #00d2ff 0%,#3a7bd5 100% );

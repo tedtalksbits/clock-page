@@ -49,6 +49,7 @@
         night: './icons/night.png'
 
     }
+
     const fetchWeather = async () => {
         const res = await fetch(URL, {
             method: 'GET',
@@ -59,26 +60,35 @@
         const result = await res.json();
         console.log(result.DailyForecasts);
 
+
         let dateText = document.querySelector('.date');
-        let tempText = document.querySelector('.temp');
-        let bottomText = document.querySelector('.day');
-
-        let weatherDegree = result.DailyForecasts[0].Temperature.Minimum.Value;
-        let weatherCondition = result.DailyForecasts[0].Day.IconPhrase;
-        let hasPercipitation = result.DailyForecasts[0].Day.HasPercipitation;
-
-        bottomText.innerHTML = weatherCondition;
         dateText.innerHTML = result.DailyForecasts[0].Date.slice(0, 10);
 
-        if (weatherDegree >= 60 && !hasPercipitation) {
+        let tempText = document.querySelector('.temp');
+        let weatherDegree = result.DailyForecasts[0].Temperature.Minimum.Value;
+        tempText.innerHTML = weatherDegree + "<p>°F<p/>";
 
-            tempText.innerHTML = weatherDegree + "<p>°F<p/>";
+
+        let bottomText = document.querySelector('.day');
+        let weatherCondition = result.DailyForecasts[0].Day.IconPhrase;
+        bottomText.innerHTML = weatherCondition;
+
+
+
+
+
+        let hasPercipitation = result.DailyForecasts[0].Day.HasPercipitation;
+
+
+        if (weatherDegree >= 60 || weatherCondition.includes("sunny")) {
+
             document.getElementById("weather-icon").src = icons.sunny;
+
         }
-        else if (weatherDegree >= 60 && hasPercipitation) {
+        else if (hasPercipitation == true || weatherCondition.includes("rain")) {
             document.getElementById("weather-icon").src = icons.rainy;
         }
-        else if (hasPercipitation) {
+        else {
             document.getElementById("weather-icon").src = icons.cold;
         }
     }
@@ -95,44 +105,46 @@
 
 
     function getDate() {
-
         const now = new Date();
         let seconds = now.getSeconds();
         let minutes = now.getMinutes();
-        let hours = now.getHours();
         seconds = updateTime(seconds);
         minutes = updateTime(minutes);
-        hours = updateTime(hours);
+
+
+        const armyTime = new Date().getHours();
+
+        let hour;
+
+        now.getHours() > 12 ? hour = now.getHours() - 12 : hour = now.getHours();
+
+
+
+
 
         //logic
-        if (hours < 12) {
+        if (armyTime < 12) {
             body.className = 'morning';
-            clockShow.innerHTML = hours + ':' + minutes + '<span>AM</span>';
+            clockShow.innerHTML = hour + ':' + minutes + '<span>AM</span>';
             msg.innerHTML = `Good Morning, ${username}`
 
 
         }
-        else if (hours == 12) {
-            if (minutes > 1) {
-                body.className = 'mid-day';
-                clockShow.innerHTML = hours + ':' + minutes + '<span>PM</span>';
-                msg.innerHTML = `Good Day! ${username}`
-            }
-        }
-        else if (hours > 12 && hours < 15) {
+        else if (armyTime <= 17) {
+
             body.className = 'mid-day';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + '<span>PM</span>';
+            clockShow.innerHTML = hour + ':' + minutes + '<span>PM</span>';
             msg.innerHTML = `Good Day! ${username}`
 
         }
-        else if (hours < 20) {
+        else if (armyTime <= 20) {
             body.className = 'evening';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + '<span>PM</span>';
+            clockShow.innerHTML = hour + ':' + minutes + '<span>PM</span>';
             msg.innerHTML = `Good Evening! ${username}`
         }
         else {
             body.className = 'night';
-            clockShow.innerHTML = hours - 12 + ':' + minutes + '<span>PM</span>';
+            clockShow.innerHTML = hour + ':' + minutes + '<span>PM</span>';
             msg.innerHTML = `Good Night!`
             document.getElementById("weather-icon").src = icons.night;
         }
